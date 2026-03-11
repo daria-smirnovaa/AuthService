@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://auth-service-postgres:5432/auth_service_postgres
+    username: daria
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: info
+
+security:
+  jwt:
+    access-secret: "ASDIJIUuhHUHUIIUVFfgff134gguYYlloigbVxseqwty"
+    access-lifetime: 600000
+    refresh-secret: "wenuiuweiGUYGYUVHBXWS112jBUIWCIOJBHJIHtdfGygioiHy6d78d"
+    refresh-lifetime: 86400000
+    auth-header: "Authorization"
+    bearer-prefix: "Bearer "
