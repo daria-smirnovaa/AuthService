@@ -17,14 +17,18 @@ public class JwtTokenUtils {
     public final SecurityConstants securityConstants;
 
     public String generateAccessToken(UserDetails userDetails) {
-        return generateToken(userDetails, securityConstants.getAccessLifetime());
+        return generateToken(userDetails,
+                securityConstants.getAccessLifetime(),
+                securityConstants.getAccessSecret());
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        return generateToken(userDetails, securityConstants.getRefreshLifetime());
+        return generateToken(userDetails,
+                securityConstants.getRefreshLifetime(),
+                securityConstants.getRefreshSecret());
     }
 
-    private String generateToken(UserDetails userDetails, Integer expiration) {
+    private String generateToken(UserDetails userDetails, Integer expiration, String secret) {
         Date issuedDate = new Date();
         Date expiredDate = new Date(issuedDate.getTime() + expiration);
 
@@ -32,7 +36,7 @@ public class JwtTokenUtils {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(issuedDate)
                 .setExpiration(expiredDate)
-                .signWith(SignatureAlgorithm.HS256, securityConstants.getRefreshSecret())
+                .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
 
